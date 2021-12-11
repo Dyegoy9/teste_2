@@ -1,4 +1,3 @@
-from pandas.core.reshape.concat import concat
 import tabula
 import pandas as pd
 from zipfile import ZipFile

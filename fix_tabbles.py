@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 def fix_tabble_31(tabble31_parts):
     
     # fixing first part of tabble 31:
