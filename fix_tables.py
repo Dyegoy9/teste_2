@@ -1,6 +1,6 @@
 import pandas as pd
 
-def fix_tabble_31(tabble31_parts):
+def fix_table_31(tabble31_parts):
     
     # fixing first part of tabble 31:
     # Renaming the collumns indexies
@@ -47,9 +47,9 @@ def fix_tabble_31(tabble31_parts):
     print(df)
     return df
 
-def fix_tabble30(tabble30):
+def fix_table30(tabble30):
     return tabble30
 
-def fix_tabble32(tabble32):
+def fix_table32(tabble32):
     return tabble32
 

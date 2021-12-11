@@ -1,15 +1,15 @@
 import tabula
 import pandas as pd
 from zipfile import ZipFile
-from fix_tabbles import *
+from fix_tables import *
 
 pdf_directory = "Componente_organizacional.pdf"
 
 # Retorna uma lista com as tabelas encotradas no pdf dado
-def extract_tabbles(pdf_file):
+def extract_tables(pdf_file):
     try:
-        tabble_list = tabula.read_pdf(pdf_file,pages='114-120')
-        return tabble_list
+        table_list = tabula.read_pdf(pdf_file,pages='114-120')
+        return table_list
     except:
         print('Não foi possível extrair tabelas do arquivo pdf')
         return []
@@ -30,9 +30,9 @@ def zip_files(files_list):
         zip.write(files_list[2])
 
 def main():
-    tabble_list = extract_tabbles(pdf_directory)
-    quadro_30 = tabble_list[0]
-    quadro_32 = tabble_list[7]
+    table_list = extract_tables(pdf_directory)
+    quadro_30 = table_list[0]
+    quadro_32 = table_list[7]
 
     csv_quadro30 = quadro_30.to_csv()
     csv_quadro32 = quadro_32.to_csv()
@@ -40,19 +40,19 @@ def main():
     create_csv('quadro32',csv_quadro32)
 
     # Chama as funções que consertam as tabelas 
-    fixed_tabble30 = fix_tabble30(tabble_list[0])
-    fixed_tabble31 = fix_tabble_31(tabble_list)
-    fixed_tabble32 = fix_tabble32(tabble_list[7])
-    csv_quadro30 = fixed_tabble30.to_csv()
-    csv_quadro31 = fixed_tabble31.to_csv()
-    csv_quadro30 = fixed_tabble32.to_csv()
+    fixed_table30 = fix_table30(table_list[0])
+    fixed_table31 = fix_table_31(table_list)
+    fixed_table32 = fix_table32(table_list[7])
+    csv_quadro30 = fixed_table30.to_csv()
+    csv_quadro31 = fixed_table31.to_csv()
+    csv_quadro30 = fixed_table32.to_csv()
     
     # Cria csv das tabelas consertadas
     create_csv('quadro30',csv_quadro30)
     create_csv('quadro32',csv_quadro32)
     create_csv('quadro31',csv_quadro31)
 
-    #cria zip dos arquivos cvs criados
+    #cria zip dos arquivos csv
     files_dir = ['quadro30.csv','quadro31.csv','quadro32.csv']
     zip_files(files_dir)
 
