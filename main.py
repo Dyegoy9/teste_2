@@ -9,6 +9,7 @@ pdf_directory = "Componente_organizacional.pdf"
 def extract_tables(pdf_file):
     try:
         table_list = tabula.read_pdf(pdf_file,pages='114-120')
+        print(f"Tabelas extraidas com sucesso do pdf {pdf_file}")
         return table_list
     except:
         print('Não foi possível extrair tabelas do arquivo pdf')
@@ -18,49 +19,39 @@ def create_csv(file_name,file_content):
     try:
         with open(f'{file_name}.csv','w') as file:
             file.write(file_content)
+        print(f"csv {file_name}.csv criado com sucesso!")
         return True
     except:
+        print(f"Não foi possível criar o csv {file_name}")
         return False
 
-#Compacta os arquivos cvs à um arquivo .zip 
-def zip_files(files_list):
-    with ZipFile('tabbles.zip','w') as zip:
+#create zip archive with all archives in the files_list variable
+def zip_files(name,files_list):
+    with ZipFile(name,'w') as zip:
         zip.write(files_list[0])
         zip.write(files_list[1])
         zip.write(files_list[2])
+    print(f'zip {name} criado com sucesso !')
 
 def main():
+    #Call function to extract tables from pdf
     table_list = extract_tables(pdf_directory)
-    quadro_30 = table_list[0]
-    quadro_32 = table_list[7]
 
-    csv_quadro30 = quadro_30.to_csv()
-    csv_quadro32 = quadro_32.to_csv()
-    create_csv('quadro30',csv_quadro30)
-    create_csv('quadro32',csv_quadro32)
-
-    # Chama as funções que consertam as tabelas 
+    # Call funtions to fix tables 
     fixed_table30 = fix_table30(table_list[0])
     fixed_table31 = fix_table_31(table_list)
     fixed_table32 = fix_table32(table_list[7])
-    csv_quadro30 = fixed_table30.to_csv()
-    csv_quadro31 = fixed_table31.to_csv()
-    csv_quadro30 = fixed_table32.to_csv()
+    csv_quadro30 = fixed_table30.to_csv(index = False)
+    csv_quadro31 = fixed_table31.to_csv(index = False)
+    csv_quadro32 = fixed_table32.to_csv(index = False)
     
-    # Cria csv das tabelas consertadas
+    # create csv archive of the dataframes
     create_csv('quadro30',csv_quadro30)
     create_csv('quadro32',csv_quadro32)
     create_csv('quadro31',csv_quadro31)
 
-    #cria zip dos arquivos csv
+    #create zip archive with csv's 
     files_dir = ['quadro30.csv','quadro31.csv','quadro32.csv']
-    zip_files(files_dir)
+    zip_files('Teste_Dyego.zip',files_dir)
 
 main()
-
-
-#Tarefas:
-# fazer união das tabelas em apenas uma (31)
-# Consertar tabelas 30 e 32
-# Organizar o cógido
-# zippar arquivos
