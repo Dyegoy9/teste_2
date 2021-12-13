@@ -5,7 +5,7 @@ from fix_tables import *
 
 pdf_directory = "Componente_organizacional.pdf"
 
-# Retorna uma lista com as tabelas encotradas no pdf dado
+# Return a list containing dataframes of tables on the gived pdf 
 def extract_tables(pdf_file):
     try:
         table_list = tabula.read_pdf(pdf_file,pages='114-120')
