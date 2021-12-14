@@ -4,7 +4,7 @@ from zipfile import ZipFile
 from fix_tables import *
 
 pdf_directory = "Componente_organizacional.pdf"
-
+# paginas 114-120
 # Return a list containing dataframes of tables on the gived pdf 
 def extract_tables(pdf_file):
     try:
@@ -14,16 +14,6 @@ def extract_tables(pdf_file):
     except:
         print('Não foi possível extrair tabelas do arquivo pdf')
         return []
-
-def create_csv(file_name,file_content):
-    try:
-        with open(f'{file_name}.csv','w') as file:
-            file.write(file_content)
-        print(f"csv {file_name}.csv criado com sucesso!")
-        return True
-    except:
-        print(f"Não foi possível criar o csv {file_name}")
-        return False
 
 #create zip archive with all archives in the files_list variable
 def zip_files(name,files_list):
@@ -41,15 +31,13 @@ def main():
     fixed_table30 = fix_table30(table_list[0])
     fixed_table31 = fix_table_31(table_list)
     fixed_table32 = fix_table32(table_list[7])
-    csv_quadro30 = fixed_table30.to_csv(index = False)
-    csv_quadro31 = fixed_table31.to_csv(index = False)
-    csv_quadro32 = fixed_table32.to_csv(index = False)
-    
-    # create csv archive of the dataframes
-    create_csv('quadro30',csv_quadro30)
-    create_csv('quadro32',csv_quadro32)
-    create_csv('quadro31',csv_quadro31)
-
+    # Create csv files
+    fixed_table30.to_csv('quadro30.csv',index = False)
+    print('csv quadro30.csv criado com sucesso!!!')
+    fixed_table31.to_csv('quadro31.csv',index = False)
+    print('csv quadro31.csv criado com sucesso!!!')
+    fixed_table32.to_csv('quadro32.csv',index = False)
+    print('csv quadro32.csv criado com sucesso!!!')
     #create zip archive with csv's 
     files_dir = ['quadro30.csv','quadro31.csv','quadro32.csv']
     zip_files('Teste_Dyego.zip',files_dir)

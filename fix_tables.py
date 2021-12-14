@@ -1,7 +1,6 @@
 import pandas as pd
 
 def fix_table_31(tabble31_parts):
-    
     # fixing first part of tabble 31:
     part1 = tabble31_parts[1]
     part1.rename(columns={'Unnamed: 0':"Código",
@@ -101,7 +100,7 @@ def fix_table_31(tabble31_parts):
     'Guia de demonstrativo de pagamento - tratamento odontológico':'Descrição da categoria'
     },inplace = True
     )
-    
+
     # joining all parts os table 31 in a single dataframe
     parts_list = [part1,part2,part3,part4,part5,part6]
     table31 = pd.concat(parts_list,ignore_index=True)
